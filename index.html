@@ -417,7 +417,7 @@
 
         .watchlist-btn {
             position: absolute;
-            top: 50px;
+            top: 70px;
             right: 15px;
             background: rgba(255, 255, 255, 0.2);
             border: none;
@@ -690,14 +690,14 @@
 
         // 近日上場予定企業
         const upcoming = [
-            { code: '550A', name: 'ソフトテックス', date: '2026-04-09', bookbuilding: '03/24～03/30', offeringPrice: '1,990円', offeringMin: 1990, offeringMax: 1990, description: '東証スタンダード上場。申し込み本数：2,779本（少ない）', category: 'ソフトウェア', score: 75, website: 'https://www.softtechs.co.jp/', brokers: ['SBI証券', '楽天証券', '松井証券', 'マネックス証券'] },
-            { code: '549A', name: 'ヒトトヒト ホールディングス', date: '2026-04-07', bookbuilding: '03/19～03/26', offeringPrice: '480円', offeringMin: 480, offeringMax: 480, description: '東証スタンダード上場。低価格IPO。申し込み本数：740,250本（多い）', category: 'サービス', score: 72, website: 'https://www.hitohito.co.jp/', brokers: ['野村証券', '楽天証券', 'マネックス証券', 'SBI証券'] },
-            { code: '548A', name: 'システムエグゼ', date: '2026-04-06', bookbuilding: '03/19～03/26', offeringPrice: '950円', offeringMin: 950, offeringMax: 950, description: '東証スタンダード上場。申し込み本数：612,835本（多い）', category: 'IT・通信', score: 74, website: 'https://www.systemexe.co.jp/', brokers: ['みずほ証券', '岩井コスモ証券', 'SMBC日興証券', '楽天証券'] },
-            { code: '542A', name: 'ビタブリッド ジャパン', date: '2026-04-02', bookbuilding: '03/17～03/24', offeringPrice: '1,290円～1,370円', offeringMin: 1290, offeringMax: 1370, description: '東証グロース上場。申し込み本数：218,860本', category: 'ヘルスケア', score: 78, website: 'https://www.vitabrid.co.jp/', brokers: ['SBI証券', 'SMBC日興証券', '岩井コスモ証券', 'マネックス証券'] },
-            { code: '529A', name: 'レクメド', date: '2026-04-02', bookbuilding: '03/17～03/23', offeringPrice: '1,120円', offeringMin: 1120, offeringMax: 1120, description: '東証グロース上場。申し込み本数：215,401本', category: 'バイオテック', score: 76, website: 'https://www.rekumed.co.jp/', brokers: ['野村証券', 'SBI証券', '松井証券', '岩井コスモ証券'] },
-            { code: '523A', name: 'セイワ ホールディングス', date: '2026-03-27', bookbuilding: '03/11～03/17', offeringPrice: '1,230円～1,250円', offeringMin: 1230, offeringMax: 1250, description: '東証グロース上場。申し込み本数：62,100本（多い）', category: '小売・流通', score: 77, website: 'https://www.seiwa-hd.co.jp/', brokers: ['SBI証券', '楽天証券', '松井証券', 'マネックス証券'] },
-            { code: '520A', name: 'ジェイファーマ', date: '2026-03-25', bookbuilding: '03/06～03/12', offeringPrice: '840円～900円', offeringMin: 840, offeringMax: 900, description: '東証グロース上場。申し込み本数：37,260本（多い）', category: '医薬品', score: 73, website: 'https://www.jpharma.co.jp/', brokers: ['SBI証券', '松井証券', 'マネックス証券', '楽天証券'] },
-            { code: '519A', name: 'ベーシック', date: '2026-03-25', bookbuilding: '03/06～03/12', offeringPrice: '830円～870円', offeringMin: 830, offeringMax: 870, description: '東証グロース上場。申し込み本数：21,650本（多い）', category: 'EC・プラットフォーム', score: 74, website: 'https://www.basic-co.jp/', brokers: ['岡三証券', 'SBI証券', '岩井コスモ証券', '松井証券'] }
+            { code: '550A', name: 'ソフトテックス', date: '2026-04-09', bookbuilding: '03/24～03/30', offeringPrice: '1,990円', offeringMin: 1990, offeringMax: 1990, applicationCount: '2,779本（少ない）', winRate: '52%', expectedGainRate: '18%', description: '東証スタンダード上場', category: 'ソフトウェア', score: 75, website: 'https://www.softtechs.co.jp/', brokers: ['SBI証券', '楽天証券', '松井証券', 'マネックス証券'] },
+            { code: '549A', name: 'ヒトトヒト ホールディングス', date: '2026-04-07', bookbuilding: '03/19～03/26', offeringPrice: '480円', offeringMin: 480, offeringMax: 480, applicationCount: '740,250本（多い）', winRate: '48%', expectedGainRate: '25%', description: '東証スタンダード上場。低価格IPO', category: 'サービス', score: 72, website: 'https://www.hitohito.co.jp/', brokers: ['野村証券', '楽天証券', 'マネックス証券', 'SBI証券'] },
+            { code: '548A', name: 'システムエグゼ', date: '2026-04-06', bookbuilding: '03/19～03/26', offeringPrice: '950円', offeringMin: 950, offeringMax: 950, applicationCount: '612,835本（多い）', winRate: '55%', expectedGainRate: '22%', description: '東証スタンダード上場', category: 'IT・通信', score: 74, website: 'https://www.systemexe.co.jp/', brokers: ['みずほ証券', '岩井コスモ証券', 'SMBC日興証券', '楽天証券'] },
+            { code: '542A', name: 'ビタブリッド ジャパン', date: '2026-04-02', bookbuilding: '03/17～03/24', offeringPrice: '1,290円～1,370円', offeringMin: 1290, offeringMax: 1370, applicationCount: '218,860本', winRate: '62%', expectedGainRate: '28%', description: '東証グロース上場', category: 'ヘルスケア', score: 78, website: 'https://www.vitabrid.co.jp/', brokers: ['SBI証券', 'SMBC日興証券', '岩井コスモ証券', 'マネックス証券'] },
+            { code: '529A', name: 'レクメド', date: '2026-04-02', bookbuilding: '03/17～03/23', offeringPrice: '1,120円', offeringMin: 1120, offeringMax: 1120, applicationCount: '215,401本', winRate: '58%', expectedGainRate: '32%', description: '東証グロース上場', category: 'バイオテック', score: 76, website: 'https://www.rekumed.co.jp/', brokers: ['野村証券', 'SBI証券', '松井証券', '岩井コスモ証券'] },
+            { code: '523A', name: 'セイワ ホールディングス', date: '2026-03-27', bookbuilding: '03/11～03/17', offeringPrice: '1,230円～1,250円', offeringMin: 1230, offeringMax: 1250, applicationCount: '62,100本（多い）', winRate: '60%', expectedGainRate: '26%', description: '東証グロース上場', category: '小売・流通', score: 77, website: 'https://www.seiwa-hd.co.jp/', brokers: ['SBI証券', '楽天証券', '松井証券', 'マネックス証券'] },
+            { code: '520A', name: 'ジェイファーマ', date: '2026-03-25', bookbuilding: '03/06～03/12', offeringPrice: '840円～900円', offeringMin: 840, offeringMax: 900, applicationCount: '37,260本（多い）', winRate: '51%', expectedGainRate: '20%', description: '東証グロース上場', category: '医薬品', score: 73, website: 'https://www.jpharma.co.jp/', brokers: ['SBI証券', '松井証券', 'マネックス証券', '楽天証券'] },
+            { code: '519A', name: 'ベーシック', date: '2026-03-25', bookbuilding: '03/06～03/12', offeringPrice: '830円～870円', offeringMin: 830, offeringMax: 870, applicationCount: '21,650本（多い）', winRate: '54%', expectedGainRate: '24%', description: '東証グロース上場', category: 'EC・プラットフォーム', score: 74, website: 'https://www.basic-co.jp/', brokers: ['岡三証券', 'SBI証券', '岩井コスモ証券', '松井証券'] }
         ];
 
         const history = [
@@ -1069,9 +1069,21 @@
                                 <span class="ipo-info-label">仮条件:</span>
                                 <span class="ipo-info-value">${d.offeringPrice}</span>
                             </div>
+                            <div class="ipo-info-row">
+                                <span class="ipo-info-label">当選本数:</span>
+                                <span class="ipo-info-value">${d.applicationCount}</span>
+                            </div>
+                            <div class="ipo-info-row">
+                                <span class="ipo-info-label">勝率:</span>
+                                <span class="ipo-info-value" style="color: #20b2aa; font-weight: 700;">${d.winRate}</span>
+                            </div>
                             <div class="ipo-prediction">
                                 <div class="prediction-label">📈 初値予想</div>
                                 <div class="prediction-value">${prediction.min}円～${prediction.max}円</div>
+                            </div>
+                            <div class="ipo-prediction">
+                                <div class="prediction-label">📊 上昇率予想</div>
+                                <div class="prediction-value" style="color: #27ae60;">${d.expectedGainRate}</div>
                             </div>
                             <div class="ipo-chart-container">
                                 <canvas id="chart-${idx}"></canvas>
