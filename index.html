@@ -532,7 +532,7 @@
 
         .watchlist-btn {
             position: absolute;
-            top: 15px;
+            top: 40px;
             right: 15px;
             background: transparent;
             border: none;
@@ -845,14 +845,23 @@
         }
 
         function addToWatchlist(code) {
-            if (!watchlist.includes(code)) {
-                watchlist.push(code);
-                localStorage.setItem('ipoWatchlist', JSON.stringify(watchlist));
+            let savedList = JSON.parse(localStorage.getItem('ipoWatchlist') || '[]');
+            const company = upcoming.find(c => c.code === code);
+
+            const existingIndex = savedList.findIndex(item =>
+                (typeof item === 'string' ? item : item.code) === code
+            );
+
+            if (existingIndex === -1) {
+                // 企業の全情報を保存
+                savedList.push(company);
+                localStorage.setItem('ipoWatchlist', JSON.stringify(savedList));
                 document.querySelector(`[data-code="${code}"]`).classList.add('added');
                 alert('ウォッチリストに追加しました！');
             } else {
-                watchlist = watchlist.filter(c => c !== code);
-                localStorage.setItem('ipoWatchlist', JSON.stringify(watchlist));
+                // 削除
+                savedList.splice(existingIndex, 1);
+                localStorage.setItem('ipoWatchlist', JSON.stringify(savedList));
                 document.querySelector(`[data-code="${code}"]`).classList.remove('added');
                 alert('ウォッチリストから削除しました！');
             }
