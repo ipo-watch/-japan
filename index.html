@@ -844,29 +844,16 @@
             }
         }
 
-        function addToWatchlist(btn) {
-            const code = btn.getAttribute('data-code');
-            const companyJson = btn.getAttribute('data-company');
-            const company = JSON.parse(atob(companyJson));
-
-            let ipoList = JSON.parse(localStorage.getItem('ipoWatchlist') || '[]');
-
-            const existingIndex = ipoList.findIndex(item =>
-                (typeof item === 'string' && item === code) ||
-                (typeof item === 'object' && item.code === code)
-            );
-
-            if (existingIndex === -1) {
-                // 企業の全情報を保存
-                ipoList.push(company);
-                localStorage.setItem('ipoWatchlist', JSON.stringify(ipoList));
-                btn.classList.add('added');
+        function addToWatchlist(code) {
+            if (!watchlist.includes(code)) {
+                watchlist.push(code);
+                localStorage.setItem('ipoWatchlist', JSON.stringify(watchlist));
+                document.querySelector(`[data-code="${code}"]`).classList.add('added');
                 alert('ウォッチリストに追加しました！');
             } else {
-                // 削除
-                ipoList.splice(existingIndex, 1);
-                localStorage.setItem('ipoWatchlist', JSON.stringify(ipoList));
-                btn.classList.remove('added');
+                watchlist = watchlist.filter(c => c !== code);
+                localStorage.setItem('ipoWatchlist', JSON.stringify(watchlist));
+                document.querySelector(`[data-code="${code}"]`).classList.remove('added');
                 alert('ウォッチリストから削除しました！');
             }
         }
@@ -1239,12 +1226,11 @@
             const html = upcoming.map((d, idx) => {
                 const scores = [85, 80, 75, 90, 85];
                 const prediction = calculatePrediction(d.offeringMin, d.offeringMax);
-                const isWatched = watchlist.some(item => (typeof item === 'object' ? item.code : item) === d.code);
-                const companyJson = btoa(JSON.stringify(d));
+                const isWatched = watchlist.includes(d.code);
                 return `
                     <div class="ipo-card">
                         <div class="ipo-card-header">
-                            <button class="watchlist-btn ${isWatched ? 'added' : ''}" data-code="${d.code}" data-company="${companyJson}" onclick="addToWatchlist(this)" title="ウォッチリスト">⭐</button>
+                            <button class="watchlist-btn ${isWatched ? 'added' : ''}" data-code="${d.code}" onclick="addToWatchlist('${d.code}')" title="ウォッチリスト">⭐</button>
                             <div class="ipo-card-score">${d.score}/100</div>
                             <div class="ipo-card-code">${d.code}</div>
                             <div class="ipo-card-name" style="cursor: pointer;" onclick="showCompanyModal(upcoming[${idx}])">${d.name}</div>
