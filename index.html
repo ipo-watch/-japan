@@ -33,6 +33,17 @@
             }
         }
 
+        @keyframes redGlow {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(255, 0, 0, 0.3), 0 0 20px rgba(255, 0, 0, 0.2);
+                border-color: #ff6b6b;
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(255, 0, 0, 0.6), 0 0 40px rgba(255, 0, 0, 0.4);
+                border-color: #ff3333;
+            }
+        }
+
         body {
             font-family: 'Noto Sans JP', sans-serif;
             background: linear-gradient(135deg, #ffffff 0%, #e8f7f6 50%, #f0fffe 100%);
@@ -187,6 +198,29 @@
             transform: none;
             box-shadow: none;
             border-color: #20b2aa;
+        }
+
+        .ipo-card.bb-ended {
+            opacity: 0.6;
+            background: #f5f5f5;
+            border-color: #ccc;
+        }
+
+        .ipo-card.bb-ended .ipo-card-header {
+            background: #a0a0a0;
+        }
+
+        .ipo-card.bb-ended:hover {
+            border-color: #ccc;
+        }
+
+        .ipo-card.deadline-approaching {
+            animation: redGlow 1.5s ease-in-out infinite;
+            border: 2px solid #ff6b6b;
+        }
+
+        .ipo-card.deadline-approaching .ipo-card-header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff4444 100%);
         }
 
         .ipo-card-header {
@@ -1231,13 +1265,50 @@
             }
         }
 
+        // 応募期間が終了したかチェック
+        function isBBEnded(bookbuildingStr) {
+            // フォーマット: '03/06～03/12' から終了日を抽出
+            const parts = bookbuildingStr.split('～');
+            if (parts.length < 2) return false;
+
+            const endDateStr = parts[1].trim();
+            const [month, day] = endDateStr.split('/').map(Number);
+
+            // 今年の日付として解析
+            const endDate = new Date(2026, month - 1, day);
+            const today = new Date();
+
+            return today > endDate;
+        }
+
+        // 応募締切が近いかチェック（3日以内）
+        function isDeadlineApproaching(bookbuildingStr) {
+            // フォーマット: '03/06～03/12' から終了日を抽出
+            const parts = bookbuildingStr.split('～');
+            if (parts.length < 2) return false;
+
+            const endDateStr = parts[1].trim();
+            const [month, day] = endDateStr.split('/').map(Number);
+
+            // 今年の日付として解析
+            const endDate = new Date(2026, month - 1, day);
+            const today = new Date();
+
+            // 3日以内の差分をチェック
+            const daysUntilEnd = Math.ceil((endDate - today) / (1000 * 60 * 60 * 24));
+
+            return daysUntilEnd <= 3 && daysUntilEnd > 0;
+        }
+
         function renderUpcoming() {
             const html = upcoming.map((d, idx) => {
                 const scores = [85, 80, 75, 90, 85];
                 const prediction = calculatePrediction(d.offeringMin, d.offeringMax);
                 const isWatched = watchlist.includes(d.code);
+                const bbEnded = isBBEnded(d.bookbuilding);
+                const deadlineApproaching = isDeadlineApproaching(d.bookbuilding);
                 return `
-                    <div class="ipo-card">
+                    <div class="ipo-card ${bbEnded ? 'bb-ended' : ''} ${deadlineApproaching ? 'deadline-approaching' : ''}">
                         <div class="ipo-card-header">
                             <button class="watchlist-btn ${isWatched ? 'added' : ''}" data-code="${d.code}" onclick="addToWatchlist('${d.code}')" title="ウォッチリスト">⭐</button>
                             <div class="ipo-card-score">${d.score}/100</div>
@@ -1249,7 +1320,7 @@
                             <div class="ipo-description">${d.description}</div>
                             <div class="category-badge">${d.category}</div>
                             <div class="ipo-info-row">
-                                <span class="ipo-info-label">BB期間:</span>
+                                <span class="ipo-info-label">応募期間:</span>
                                 <span class="ipo-info-value">${d.bookbuilding}</span>
                             </div>
                             <div class="ipo-info-row">
