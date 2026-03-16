@@ -199,8 +199,7 @@
         .ipo-card-score {
             position: absolute;
             top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
+            right: 15px;
             background: rgba(255, 255, 255, 0.2);
             padding: 8px 14px;
             border-radius: 8px;
@@ -847,14 +846,25 @@
         }
 
         function addToWatchlist(code) {
-            if (!watchlist.includes(code)) {
-                watchlist.push(code);
-                localStorage.setItem('ipoWatchlist', JSON.stringify(watchlist));
+            let ipoList = JSON.parse(localStorage.getItem('ipoWatchlist') || '[]');
+            const allCompanies = upcoming.concat(history);
+            const company = allCompanies.find(c => c.code === code);
+
+            const existingIndex = ipoList.findIndex(item =>
+                (typeof item === 'string' && item === code) ||
+                (typeof item === 'object' && item.code === code)
+            );
+
+            if (existingIndex === -1) {
+                // 企業の全情報を保存
+                ipoList.push(company);
+                localStorage.setItem('ipoWatchlist', JSON.stringify(ipoList));
                 document.querySelector(`[data-code="${code}"]`).classList.add('added');
                 alert('ウォッチリストに追加しました！');
             } else {
-                watchlist = watchlist.filter(c => c !== code);
-                localStorage.setItem('ipoWatchlist', JSON.stringify(watchlist));
+                // 削除
+                ipoList.splice(existingIndex, 1);
+                localStorage.setItem('ipoWatchlist', JSON.stringify(ipoList));
                 document.querySelector(`[data-code="${code}"]`).classList.remove('added');
                 alert('ウォッチリストから削除しました！');
             }
